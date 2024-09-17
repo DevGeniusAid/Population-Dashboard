@@ -10,3 +10,4 @@ streamlit-folium
 streamlit-navigation-bar
 scikit-learn
 lifelines
+scipy == 1.13.1
