@@ -487,6 +487,7 @@ with tab1:
 
 with tab2:
     #Library
+    !pip install --upgrade lifelines
     from lifelines import KaplanMeierFitter, CoxPHFitter
     from sklearn.model_selection import train_test_split
     from sklearn.preprocessing import StandardScaler
