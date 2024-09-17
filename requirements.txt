@@ -8,3 +8,4 @@ plotly
 ipython
 streamlit-folium
 streamlit-navigation-bar
+lifelines
