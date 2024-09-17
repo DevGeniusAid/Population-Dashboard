@@ -1,15 +1,12 @@
+streamlit
 folium
 numpy
 pandas
 geopandas
-streamlit
 matplotlib
 plotly
-ipython
+IPython
 streamlit-folium
 streamlit-navigation-bar
-lifelines
 scikit-learn
-scipy == 1.13.1
-lightgbm
-datetime
+lifelines
