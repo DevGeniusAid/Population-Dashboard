@@ -25,7 +25,7 @@ warnings.filterwarnings('ignore')
 
 st.set_page_config(layout='wide')
 
-df_cleaned = pd.read_csv('cleaned.csv')
+df_cleaned = pd.read_csv('cleaned.csv') # Can't provide the data for security reasons
 
 # Set data types for specific columns
 df_cleaned = df_cleaned.astype({'sex': 'category', 'start_type': 'category', 'end_type': 'category'})
@@ -252,12 +252,6 @@ with tab1:
     total_outmigration = filtered_interval_df[filtered_interval_df['end_type'] == 'EXT'].shape[0]
     total_deaths = filtered_interval_df[filtered_interval_df['end_type'] == 'DTH'].shape[0]
 
-    # # Calculate total immigration, outmigration, and deaths for the selected year
-    # total_immigration = df_cleaned[(df_cleaned['year'] == selected_year) & (df_cleaned['start_type'] == 'ENT')].shape[0]
-    # total_outmigration = df_cleaned[(df_cleaned['year'] == selected_year) & (df_cleaned['end_type'] == 'EXT')].shape[0]
-    # total_deaths = df_cleaned[(df_cleaned['year'] == selected_year) & (df_cleaned['end_type'] == 'DTH')].shape[0]
-
-    # Display the total population for the selected year
     # Display total population, immigration, outmigration, and deaths
     st.title(f'Demographic Overview for {selected_year}')
 
@@ -643,99 +637,6 @@ with tab2:
 
 
 # +
-# # Assuming df_cleaned is available and preloaded
-# df_churn = df_cleaned.copy()
-
-# def load_data():
-#     # Feature Selection
-#     features = ['start_date', 'end_date', 'start_type', 'end_type', 'household', 'bairro', 'age', 'sex']
-#     df_churn = df_cleaned[features]
-
-#     # Target variable
-#     df_churn['churn'] = np.where(df_churn['end_date'].notnull(), 1, 0)
-
-#     # Feature Engineering: Calculate duration of stay
-#     df_churn['duration'] = (df_churn['end_date'] - df_churn['start_date']).dt.days
-#     df_churn['duration'] = df_churn['duration'].fillna(0)
-
-#     # Handling categorical variables with Label Encoding
-#     le = LabelEncoder()
-#     df_churn['start_type'] = le.fit_transform(df_churn['start_type'])
-#     df_churn['end_type'] = le.fit_transform(df_churn['end_type'])
-#     df_churn['household'] = le.fit_transform(df_churn['household'])
-#     df_churn['bairro'] = le.fit_transform(df_churn['bairro'])
-#     df_churn['sex'] = le.fit_transform(df_churn['sex'])
-
-#     return df_churn
-
-# # Function to define features and target
-# def define_features_and_target(df_churn):
-#     X = df_churn[['start_type', 'end_type', 'household', 'bairro', 'age', 'sex', 'duration']]
-#     y = df_churn['churn']
-#     return X, y    
-
-# with tab2:
-#     st.title('Churn Prediction App')
-
-#     # Load and prepare data
-#     df_churn = load_data()
-#     X, y = define_features_and_target(df_churn)
-
-#     # Sidebar for model selection
-#     model_type = st.sidebar.selectbox('Select Model', ('Logistic Regression', 'Random Forest'))
-
-#     st.write(f'You selected: {model_type}')
-
-#     # Split the data
-#     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-#     # Train the model based on user selection
-#     if model_type == 'Logistic Regression':
-#         model = LogisticRegression(random_state=42)
-#     elif model_type == 'Random Forest':
-#         model = RandomForestClassifier(random_state=42)
-
-#     if st.button('Train Model'):
-#         with st.spinner('Training the model...'):
-#             model.fit(X_train, y_train)
-#             y_pred = model.predict(X_test)
-#             accuracy = accuracy_score(y_test, y_pred)
-#             report = classification_report(y_test, y_pred)
-#             roc_auc = roc_auc_score(y_test, y_pred)
-
-#             st.success('Model trained successfully!')
-#             st.write(f'**Accuracy:** {accuracy}')
-#             st.write(f'**ROC-AUC:** {roc_auc}')
-#             st.text('**Classification Report:**')
-#             st.text(report)
-
-# +
-# '''
-# Cross-validation is a technique where the dataset is split into multiple folds. 
-# The model is trained on some folds and tested on the remaining fold.
-# '''
-# with tab2:
-#     from sklearn.model_selection import cross_val_score
-
-#     # Define the model (Random Forest for example)
-#     model = RandomForestClassifier(random_state=42)
-
-#     # Perform 5-fold cross-validation
-#     cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
-
-#     # Output the average accuracy and standard deviation
-#     st.write(f'Cross-Validation Accuracy: {cv_scores.mean()}')
-#     st.write(f'Standard Deviation: {cv_scores.std()}\n')
-# -
-
-
-# ----------------
-
-# **Age Prediction**<br>
-# Predict the age of individuals based on their demographics and location.<br>
-# Data Preprocessing:
-
-# +
 with tab2:
     from sklearn.preprocessing import OneHotEncoder
     from sklearn.impute import SimpleImputer
@@ -1043,57 +944,6 @@ with tab2:
 
 
 # !streamlit run Dashboard.py
-
-# +
-# # Assuming df_cleaned['start_date'] is already in datetime format
-# start_date_condition = df_cleaned['start_date'] == pd.Timestamp('2020-01-01')
-# start_type_condition = df_cleaned['start_type'] == 'BIR'
-
-# see = df_cleaned[start_date_condition & start_type_condition]
-# # see
-
-# +
-# df_cleaned[df_cleaned.start_date > '2020-01-01']
-
-# +
-# # Filter data for the selected year
-# filtered_data = df_cleaned[df_cleaned['year'] == selected_year]
-# +
-# # Create the Streamlit app
-# st.title('Total Population Over Time')
-
-# # Plot the total population per year
-# fig = px.line(total_population_per_year, x='year', y='total_population', 
-#               title='Total Population Over Time',
-#               labels={'year': 'Year', 'total_population': 'Total Population'})
-
-# # Display the plot
-# st.plotly_chart(fig)
-
-# +
-# # Calculate metrics based on the selected year
-# total_population = calculate_population(year_selected)
-# total_immigration = calculate_immigration(year_selected)
-# total_outmigration = calculate_outmigration(year_selected)
-# total_deaths = calculate_deaths(year_selected)
-
-# +
-# date = pd.Timestamp('2020-07-01')
-
-# +
-# df_cleaned.loc[lambda x: (x['start_date'] <= date) &
-#                        ((x['end_date'] > date) | x['end_date'].isna())]
-# -
-
-
-
-# +
-# # Calculate the total population, inmigration, outmigration, and deaths for the selected year
-# total_population = filtered_data['perm_id'].nunique()
-# total_inmigration = df_cleaned[(df_cleaned['start_date'].dt.year == selected_year) & (df_cleaned['start_type'] == 'ENT')].shape[0]
-# total_outmigration = df_cleaned[(df_cleaned['end_date'].dt.year == selected_year) & (df_cleaned['end_type'] == 'EXT')].shape[0]
-# total_deaths = df_cleaned[(df_cleaned['end_date'].dt.year == selected_year) & (df_cleaned['end_type'] == 'DTH')].shape[0]
-# -
 
 
 
