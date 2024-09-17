@@ -11,4 +11,5 @@ streamlit-navigation-bar
 lifelines
 scikit-learn
 scipy == 1.13.1
+lightgbm
 datetime
