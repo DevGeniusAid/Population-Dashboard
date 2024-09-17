@@ -9,7 +9,7 @@ ipython
 streamlit-folium
 streamlit-navigation-bar
 lifelines
-sklearn
+scikit-learn
 scipy == 1.13.1
 lightgbm
 datetime
