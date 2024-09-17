@@ -11,3 +11,4 @@ streamlit-navigation-bar
 scikit-learn
 lifelines
 scipy == 1.13.1
+setuptools>=42.0.0
